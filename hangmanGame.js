@@ -1,7 +1,5 @@
-// Creating a giant hangmanGame object that will house all of our logic and variables.
 var hangmanGame = {
 
-  // Object of all words that can be chosen, along with info such as their picture and a song clip.
   wordsToPick: {
     genesis: {
       picture: "genesis.jpg",
@@ -60,7 +58,6 @@ var hangmanGame = {
     }
   },
 
-  // Variables that set the initial state of our hangman game.
   wordInPlay: null,
   lettersOfTheWord: [],
   matchedLetters: [],
@@ -70,7 +67,6 @@ var hangmanGame = {
   letterGuessed: null,
   wins: 0,
 
-  // The setupGame method is called when the page first loads.
   setupGame: function() {
     // Here we pick a random word.
     var objKeys = Object.keys(this.wordsToPick);
@@ -224,31 +220,23 @@ var hangmanGame = {
       document.querySelector("#music").innerHTML = this.wordsToPick[this.wordInPlay].song +
       " By " + this.wordInPlay;
 
-      // Update the image of the band on the page.
       document.querySelector("#bandDiv").innerHTML =
         "<img class='band-image' src='images/" +
         this.wordsToPick[this.wordInPlay].picture + "' alt='" +
         this.wordsToPick[this.wordInPlay].song + "'>";
 
-      // Play an audio track of the band.
       var audio = new Audio(this.wordsToPick[this.wordInPlay].preview);
       audio.play();
 
-      // return true, which will trigger the restart of our game in the updatePage function.
       return true;
     }
-    // If win is false, return false to the updatePage function. The game goes on!
     return false;
   }
 };
 
-// Initialize the game when the page loads.
 hangmanGame.setupGame();
 
-// When a key is pressed..
 document.onkeyup = function(event) {
-  // Capture pressed key and make it lowercase.
   hangmanGame.letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-  // Pass the guessed letter into our updatePage function to run the game logic.
   hangmanGame.updatePage(hangmanGame.letterGuessed);
 };
